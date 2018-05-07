@@ -16,13 +16,14 @@ public class ArenaFrame extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private ArenaPanel panel;
+	private ControlPane paneles;
 	
 	
 	 public static void main(String[]args)
 	   {
 		 ArenaFrame arenaFrame = new ArenaFrame();
 		 arenaFrame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-		 arenaFrame.setSize(800,600);
+		 arenaFrame.setSize(1000,800);
 		 arenaFrame.setResizable(false);
 		 arenaFrame.setVisible(true);
 		
@@ -31,8 +32,12 @@ public class ArenaFrame extends JFrame implements ActionListener {
 	public ArenaFrame() {
 		
 		super("Arena");
+		this.setLayout(new BorderLayout());
+		
 		panel =new ArenaPanel(this);
-		getContentPane().add(panel);
+		paneles =new ControlPane(this);
+		//getContentPane().add(panel,);
+		getContentPane().add(paneles);
 	    panel.setVisible(true);
 		
 	}

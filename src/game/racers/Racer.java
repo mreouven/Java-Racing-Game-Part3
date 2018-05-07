@@ -15,7 +15,7 @@ import utilities.Fate;
 import utilities.Mishap;
 import utilities.Point;
 
-public abstract class Racer implements IDrawable {
+public abstract class Racer implements IDrawable,Runnable {
 	protected static int lastSerialNumber = 1;
 
 	private int serialNumber;
@@ -24,9 +24,11 @@ public abstract class Racer implements IDrawable {
 	private Point finish;
 	private Arena arena;
 	private double maxSpeed;
+	protected Thread thread;
 	private double acceleration;
 	private double currentSpeed;
 	protected boolean threadSuspended;
+
 	@SuppressWarnings("unused")
 	private double failureProbability; 
 	private EnumContainer.Color color; 
@@ -125,6 +127,7 @@ public abstract class Racer implements IDrawable {
 	}
 	
 	
+	
 	public void loadImages(String nm){
 		 switch(getColor()){
 			 case BLACK:
@@ -182,5 +185,26 @@ public abstract class Racer implements IDrawable {
 	 		
 	    }
 	
+		@Override
+		public void run() {
+			while (true) 
+		       {
+		           try 
+		           {
+		               Thread.sleep(50);
+		               
+		               synchronized(this) {
+		                   while (threadSuspended)
+		   						wait();
+		   				}  
+		          }
+		           catch (InterruptedException e) 
+		           {
+		           	System.out.println(this.name+ " dead...");
+		           	return;
+		           }
+		       }
+			
+		}
 	
 }
