@@ -1,0 +1,44 @@
+package game.racers.naval;
+
+import game.racers.Racer;
+import graphics.ArenaPanel;
+import utilities.EnumContainer;
+import utilities.EnumContainer.BoatType;
+import utilities.EnumContainer.Color;
+import utilities.EnumContainer.Team;
+
+public class RowBoat extends Racer implements INavalRacer {
+	private static final String CLASS_NAME = "RowBoat";
+
+	private static final double DEFAULT_MAX_SPEED = 75;
+	private static final double DEFAULT_ACCELERATION = 10;
+	private static final Color DEFAULT_color = Color.RED;
+
+	private EnumContainer.BoatType type;
+	private EnumContainer.Team team;
+
+	public RowBoat(ArenaPanel panel) {
+		this(CLASS_NAME + " #" + lastSerialNumber, DEFAULT_MAX_SPEED, DEFAULT_ACCELERATION, DEFAULT_color,panel);
+	}
+
+	public RowBoat(String name, double maxSpeed, double acceleration, utilities.EnumContainer.Color color,ArenaPanel panel) {
+		super(name, maxSpeed, acceleration, color,panel);
+		this.type = BoatType.SKULLING;
+		this.team = Team.DOUBLE;
+	}
+
+	@Override
+	public String className() {
+		return CLASS_NAME;
+	}
+
+	@Override
+	public String describeSpecific() {
+		String s = "";
+		s += ", Type: " + this.type;
+		s += ", Team: " + this.team;
+
+		return s;
+	}
+
+}
