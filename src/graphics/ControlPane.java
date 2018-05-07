@@ -1,6 +1,7 @@
 package graphics;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,13 +14,51 @@ import utilities.EnumContainer;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.GridLayout;
+
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import java.awt.BorderLayout;
 
 public class ControlPane extends JPanel implements ActionListener {
 
-	/**
+	public ControlPane() {
+		JPanel onep=new ArenalPanel();
+		JPanel twop=new RacerPanel();
+		JPanel threep=new CtrlPanel();
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setPreferredSize(new Dimension(200, 500));
+		add(onep);
+		add(twop);
+		add(threep);
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+/*	*//**
 	 * 
-	 */
+	 *//*
 	private static final long serialVersionUID = 1L;
 	private JComboBox<String> arenaChoice;
 	private ArenaFrame frame;
@@ -31,19 +70,20 @@ public class ControlPane extends JPanel implements ActionListener {
 	private JTextField textField_3;
 	private JTextField textField_4;
 
-	/**
+	*//**
 	 * Create the panel.
-	 */
+	 *//*
 	public ControlPane(ArenaFrame f) {
 		
 		setFrame(f);
 		setBackground(new Color(255, 228, 196));
-		setLayout(null);
+		JPanel haut =new JPanel();
 		
 		JComboBox comboBox = new JComboBox(arenaList);
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		comboBox.setBounds(63, 28, 113, 25);
-		add(comboBox);
+		haut.add(comboBox);
+		setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JLabel lblChooseArena = new JLabel("Choose Arena:");
 		lblChooseArena.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -149,6 +189,8 @@ public class ControlPane extends JPanel implements ActionListener {
 		add(btnNewButton_2);
 		
 		
+		add(haut);
+		//add(haut);
 	
 		
 	}
@@ -179,4 +221,33 @@ public class ControlPane extends JPanel implements ActionListener {
 		
 		
 	}
+	
+	
+	public class AernaPanel extends JPanel implements ActionListener{
+
+		
+		*//**
+		 * 
+		 *//*
+		private static final long serialVersionUID = 1L;
+		
+		
+		public AernaPanel() {
+			// TODO Auto-generated constructor stub
+		}
+		
+		void createPanel() {
+			
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		
+	}
+	
+	*/
+	
 }
