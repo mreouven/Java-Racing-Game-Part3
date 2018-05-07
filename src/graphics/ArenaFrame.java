@@ -36,8 +36,8 @@ public class ArenaFrame extends JFrame implements ActionListener {
 		
 		panel =new ArenaPanel(this);
 		paneles =new ControlPane(this);
-		//getContentPane().add(panel,);
-		getContentPane().add(paneles);
+		getContentPane().add(panel,BorderLayout.WEST);
+		getContentPane().add(paneles,BorderLayout.EAST);
 	    panel.setVisible(true);
 		
 	}

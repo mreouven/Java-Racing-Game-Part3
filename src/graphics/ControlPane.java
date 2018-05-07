@@ -75,6 +75,7 @@ public class ControlPane extends JPanel implements ActionListener {
 		JButton btnNewButton = new JButton("Build Arena");
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNewButton.setBounds(51, 160, 150, 33);
+		btnNewButton.addActionListener(this);
 		add(btnNewButton);
 		
 		JLabel lblChooseRacer = new JLabel("Choose Racer: ");
@@ -158,8 +159,24 @@ public class ControlPane extends JPanel implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		if (!textField.getText().equals(""))
+			{
+			textField.setBackground(Color.WHITE);
+			try {
+				Integer.parseInt(textField.getText());
+			} catch (NumberFormatException e1){
+				textField.setText("NUMBER");
+				textField.setBackground(Color.ORANGE);
+			}
+		}
+		else {
+			textField.setBackground(Color.RED);
+			textField.setText("obligatoire");
 			System.out.println("vide");
+		}
+		
+		
 		
 	}
 }
