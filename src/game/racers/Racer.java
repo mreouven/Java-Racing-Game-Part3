@@ -4,11 +4,9 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
 import game.arenas.Arena;
-import graphics.ArenaPanel;
+import graphics.ArenaField;
 import graphics.IDrawable;
 import utilities.EnumContainer;
 import utilities.Fate;
@@ -24,16 +22,32 @@ public abstract class Racer implements IDrawable,Runnable {
 	private Point finish;
 	private Arena arena;
 	private double maxSpeed;
+	protected boolean coordChanged;
 	protected Thread thread;
 	private double acceleration;
 	private double currentSpeed;
+	public String getName() {
+		return name;
+	}
+
+	public Point getCurrentLocation() {
+		return currentLocation;
+	}
+
+	public double getMaxSpeed() {
+		return maxSpeed;
+	}
+
+	public double getCurrentSpeed() {
+		return currentSpeed;
+	}
+
 	protected boolean threadSuspended;
 
 	@SuppressWarnings("unused")
 	private double failureProbability; 
 	private EnumContainer.Color color; 
-	
-	protected ArenaPanel panel;
+	private ArenaField panel;
 	protected BufferedImage img1;
 
 	private Mishap mishap;
@@ -44,7 +58,7 @@ public abstract class Racer implements IDrawable,Runnable {
 	 * @param acceleration
 	 * @param color
 	 */
-	public Racer(String name, double maxSpeed, double acceleration, utilities.EnumContainer.Color color, ArenaPanel _pan) {
+	public Racer(String name, double maxSpeed, double acceleration, utilities.EnumContainer.Color color, ArenaField _pan) {
 		this.serialNumber = Racer.lastSerialNumber++;
 		this.name = name;
 		this.maxSpeed = maxSpeed;
@@ -54,8 +68,13 @@ public abstract class Racer implements IDrawable,Runnable {
 	}
 
 	public abstract String className();
+	
+	
 	synchronized public void setSuspend() { threadSuspended = true; }
 	synchronized public void setResume() { threadSuspended = false; notify(); }
+	synchronized public void setChanges(boolean state){ coordChanged = state; }	 
+	public void start() { thread.start(); }
+	public void interrupt() { thread.interrupt(); }
 	
 	
 	public String describeRacer() {
@@ -92,31 +111,44 @@ public abstract class Racer implements IDrawable,Runnable {
 		System.out.println("[" + this.className() + "] " + this.describeRacer());
 	}
 
-	public Point move(double friction) {
-		double reductionFactor = 1;
-		if (!(this.hasMishap()) && Fate.breakDown()) {
-			this.mishap = Fate.generateMishap();
-			System.out.println(this.name + " Has a new mishap! (" + this.mishap + ")");
-		}
-
-		if (this.hasMishap()) {
-			reductionFactor = mishap.getReductionFactor();
-			this.mishap.nextTurn();
-		}
-		if (this.currentSpeed < this.maxSpeed) {
-			this.currentSpeed += this.acceleration * friction * reductionFactor;
-		}
-		if (this.currentSpeed > this.maxSpeed) {
-			this.currentSpeed = this.maxSpeed;
-		}
-		double newX = (this.currentLocation.getX() + (this.currentSpeed));
-		Point newLocation = new Point(newX, this.currentLocation.getY());
-		this.currentLocation = newLocation;
-
-		if (this.currentLocation.getX() >= this.finish.getX()) {
-			this.arena.crossFinishLine(this);
-		}
-		return this.currentLocation;
+	public void run(double friction) {
+		try 
+        {
+            Thread.sleep(50);
+            
+            synchronized(this) {
+                while (threadSuspended)
+						wait();
+				}  
+       } 
+       catch (InterruptedException e){
+    	   
+			double reductionFactor = 1;
+			if (!(this.hasMishap()) && Fate.breakDown()) {
+				this.mishap = Fate.generateMishap();
+				System.out.println(this.name + " Has a new mishap! (" + this.mishap + ")");
+			}
+	
+			if (this.hasMishap()) {
+				reductionFactor = mishap.getReductionFactor();
+				this.mishap.nextTurn();
+			}
+			if (this.currentSpeed < this.maxSpeed) {
+				this.currentSpeed += this.acceleration * friction * reductionFactor;
+			}
+			if (this.currentSpeed > this.maxSpeed) {
+				this.currentSpeed = this.maxSpeed;
+			}
+			double newX = (this.currentLocation.getX() + (this.currentSpeed));
+			Point newLocation = new Point(newX, this.currentLocation.getY());
+			this.currentLocation = newLocation;
+			
+			//TODO OBERVABLE FINISH
+			/*if (this.currentLocation.getX() >= this.finish.getX()) {
+				this.arena.crossFinishLine(this);
+			}*/
+        }
+		
 	}
 	
 	
@@ -164,7 +196,7 @@ public abstract class Racer implements IDrawable,Runnable {
 				 break;
 			 case YELLOW:
 				 try { 
-					 img1 = ImageIO.read(new File(PICTURE_PATH + nm + "Black.png"));
+					 img1 = ImageIO.read(new File(PICTURE_PATH + nm + "Yellow.png"));
 				 } 
 				 catch (IOException e) { 
 					 System.out.println("Cannot load picture");
@@ -177,34 +209,13 @@ public abstract class Racer implements IDrawable,Runnable {
 	}
 
 	
-	  public void drawObject(Graphics g)
+	public void drawObject(Graphics g,int i,int j)
 	    {
-		  System.out.println("ici");
-	 		g.drawImage(img1,(int) currentLocation.getX(),(int) currentLocation.getY(), panel);
-	 		panel.repaint();
+//		  System.out.println(img1);
+		
+	 		g.drawImage(img1,i,j, panel);
+	 		
 	 		
 	    }
-	
-		@Override
-		public void run() {
-			while (true) 
-		       {
-		           try 
-		           {
-		               Thread.sleep(50);
-		               
-		               synchronized(this) {
-		                   while (threadSuspended)
-		   						wait();
-		   				}  
-		          }
-		           catch (InterruptedException e) 
-		           {
-		           	System.out.println(this.name+ " dead...");
-		           	return;
-		           }
-		       }
-			
-		}
 	
 }

@@ -32,7 +32,7 @@ public class RacerPanel extends JPanel {
 		lblChooseRacer.setAlignmentX(Component.CENTER_ALIGNMENT);
 		add(lblChooseRacer);
 		
-		JComboBox comboBox_1 = new JComboBox();
+		JComboBox<String> comboBox_1 = new JComboBox<String>();
 		comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		comboBox_1.setBounds(61, 232, 122, 25);
 		comboBox_1.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -44,7 +44,7 @@ public class RacerPanel extends JPanel {
 		lblNewLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		add(lblNewLabel);
 		
-		JComboBox comboBox_2 = new JComboBox(colorList);
+		JComboBox<String> comboBox_2 = new JComboBox<String>(colorList);
 		comboBox_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		comboBox_2.setBounds(63, 278, 122, 25);
 		comboBox_2.setAlignmentX(Component.CENTER_ALIGNMENT);

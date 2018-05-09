@@ -7,26 +7,28 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import game.racers.Racer;
 import game.racers.air.Airplane;
 import game.racers.air.IAerialRacer;
 import utilities.EnumContainer;
 import utilities.EnumContainer.Arena;
+import utilities.EnumContainer.Color;
 
 public class ArenaField extends JPanel implements ActionListener {
-
+	private Airplane test;
+	private Airplane test3;
+	private Airplane test2;
 	/**
 	 * Create the panel.
 	 */
 	public ArenaField(){
 		setPreferredSize(new Dimension(5050, 500));
-		racers = new ArrayList<Racer>();
-		setBackgr(Arena.NAVAL);
+		test =new Airplane("reou", 2, 3, Color.BLACK, 4, this);
+		test2 =new Airplane("reou", 2, 3, Color.YELLOW, 4, this);
+		test3 =new Airplane("reou", 2, 3, Color.BLUE, 4, this);
+		setBackgr(Arena.LAND);
 
 		
 	}
@@ -34,12 +36,11 @@ public class ArenaField extends JPanel implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
 
-	private ArrayList<Racer> racers;
+	
 	
 	
 	private BufferedImage backroun;
 	private boolean bgr;
-	private Thread controller;
 	IAerialRacer tia;
 	
 	
@@ -51,7 +52,7 @@ public class ArenaField extends JPanel implements ActionListener {
 		   	super.paintComponent(g);
 		   	if(bgr && (backroun!=null))
 	            g.drawImage(backroun, 0, 0, getWidth(), getHeight(), this);
-		   	
+		   		test.drawObject(g,0,100);
 		   	repaint();
 		   	
 	   }
@@ -79,7 +80,8 @@ public class ArenaField extends JPanel implements ActionListener {
 		
 			   bgr = false;   
 		   }
-		  
+		   
+		   repaint();
 	
 	}
 	
