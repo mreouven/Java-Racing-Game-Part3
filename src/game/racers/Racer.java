@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Observable;
+
 import javax.imageio.ImageIO;
 import game.arenas.Arena;
 import graphics.ArenaField;
@@ -13,7 +15,7 @@ import utilities.Fate;
 import utilities.Mishap;
 import utilities.Point;
 
-public abstract class Racer implements IDrawable,Runnable {
+public abstract class Racer extends Observable implements IDrawable,Runnable {
 	protected static int lastSerialNumber = 1;
 
 	private int serialNumber;
@@ -214,6 +216,7 @@ public abstract class Racer implements IDrawable,Runnable {
 //		  System.out.println(img1);
 		
 	 		g.drawImage(img1,i,j, panel);
+	 		panel.repaint();
 	 		
 	 		
 	    }

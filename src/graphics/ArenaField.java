@@ -52,7 +52,7 @@ public class ArenaField extends JPanel implements ActionListener {
 		   	super.paintComponent(g);
 		   	if(bgr && (backroun!=null))
 	            g.drawImage(backroun, 0, 0, getWidth(), getHeight(), this);
-		   		test.drawObject(g,0,100);
+		   		test.drawObject(g,600,100);
 		   	repaint();
 		   	
 	   }
