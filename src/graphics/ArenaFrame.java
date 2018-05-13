@@ -34,7 +34,7 @@ public class ArenaFrame extends JFrame implements ActionListener {
 		super("Arena");
 		
 		
-		
+		 
 		panel =new FinalPanel();
 		add(panel);
 	    panel.setVisible(true);

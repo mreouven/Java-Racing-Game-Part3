@@ -73,5 +73,8 @@ public class EnumContainer {
 	public static enum Arena {
 		NAVAL, AERA, LAND , NULL
 	}
+	public static enum Event {
+		FINISHED, BROKENDOWN, REPAIRED, DISABLED
+	}
 
 }

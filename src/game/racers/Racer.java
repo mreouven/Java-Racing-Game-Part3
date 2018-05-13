@@ -1,5 +1,6 @@
 package game.racers;
 
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -11,23 +12,34 @@ import game.arenas.Arena;
 import graphics.ArenaField;
 import graphics.IDrawable;
 import utilities.EnumContainer;
+import utilities.EnumContainer.Event;
 import utilities.Fate;
 import utilities.Mishap;
 import utilities.Point;
 
 public abstract class Racer extends Observable implements IDrawable,Runnable {
+	
+	private Arena arena;
+	
 	protected static int lastSerialNumber = 1;
-
 	private int serialNumber;
 	private String name;
 	private Point currentLocation;
 	private Point finish;
-	private Arena arena;
 	private double maxSpeed;
 	protected boolean coordChanged;
 	protected Thread thread;
 	private double acceleration;
 	private double currentSpeed;
+	protected boolean threadSuspended;
+	private double failureProbability; 
+	private EnumContainer.Color color; 
+	private ArenaField panel;
+	protected BufferedImage img1;
+	private Mishap mishap;
+	
+	
+	
 	public String getName() {
 		return name;
 	}
@@ -44,15 +56,7 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 		return currentSpeed;
 	}
 
-	protected boolean threadSuspended;
 
-	@SuppressWarnings("unused")
-	private double failureProbability; 
-	private EnumContainer.Color color; 
-	private ArenaField panel;
-	protected BufferedImage img1;
-
-	private Mishap mishap;
 
 	/**
 	 * @param name
@@ -91,6 +95,45 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 		return s;
 	}
 
+	public Point move() {
+		this.setChanged();
+		if(mishap!=null && mishap.isFixable() && mishap.getTurnsToFix()==0) {
+			mishap=null;
+			this.notifyObservers(Event.REPAIRED);
+		}
+		
+		if(mishap==null && Fate.breakDown(this.failureProbability)) {
+			mishap=Fate.generateMishap();
+			System.out.println(name + " Has a new mishap! " + mishap);
+			if(mishap.isFixable()) {
+				this.notifyObservers(Event.BROKENDOWN);
+			}
+			else
+				this.notifyObservers(Event.DISABLED);
+		}
+		
+		if(mishap!=null && mishap.getTurnsToFix()>0) {
+			this.setCurrentSpeed(this.currentSpeed + mishap.getReductionFactor() * this.acceleration);
+			if(this.mishap.isFixable())
+				mishap.nextTurn();			
+		}
+		else if (this.currentSpeed < this.maxSpeed) 
+			this.setCurrentSpeed(this.currentSpeed + this.acceleration );
+
+			
+		
+		if (this.currentSpeed > this.maxSpeed) 
+			this.setCurrentSpeed(this.maxSpeed);
+		
+		Point newLocation = new Point((this.currentLocation.getX() + (1 * this.currentSpeed)),
+				this.currentLocation.getY());
+		this.setCurrentLocation(newLocation);
+		
+		if (this.currentLocation.getX() >= this.finish.getX())
+			this.notifyObservers(Event.FINISHED);
+		return this.currentLocation;
+	}
+
 	public abstract String describeSpecific();
 
 	public int getSerialNumber() {
@@ -113,45 +156,14 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 		System.out.println("[" + this.className() + "] " + this.describeRacer());
 	}
 
-	public void run(double friction) {
-		try 
-        {
-            Thread.sleep(50);
-            
-            synchronized(this) {
-                while (threadSuspended)
-						wait();
-				}  
-       } 
-       catch (InterruptedException e){
-    	   
-			double reductionFactor = 1;
-			if (!(this.hasMishap()) && Fate.breakDown()) {
-				this.mishap = Fate.generateMishap();
-				System.out.println(this.name + " Has a new mishap! (" + this.mishap + ")");
-			}
-	
-			if (this.hasMishap()) {
-				reductionFactor = mishap.getReductionFactor();
-				this.mishap.nextTurn();
-			}
-			if (this.currentSpeed < this.maxSpeed) {
-				this.currentSpeed += this.acceleration * friction * reductionFactor;
-			}
-			if (this.currentSpeed > this.maxSpeed) {
-				this.currentSpeed = this.maxSpeed;
-			}
-			double newX = (this.currentLocation.getX() + (this.currentSpeed));
-			Point newLocation = new Point(newX, this.currentLocation.getY());
-			this.currentLocation = newLocation;
-			
-			//TODO OBERVABLE FINISH
-			/*if (this.currentLocation.getX() >= this.finish.getX()) {
-				this.arena.crossFinishLine(this);
-			}*/
-        }
+	@Override
+	public void run() {
+		System.out.println("runing");
+		while(move().getX()<=finish.getX() && !isDisabled() );
 		
 	}
+	
+	private boolean isDisabled() {return (mishap!=null && !mishap.isFixable()); }
 	
 	
 	
@@ -212,13 +224,21 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 
 	
 	public void drawObject(Graphics g,int i,int j)
-	    {
-//		  System.out.println(img1);
-		
+	    {		
 	 		g.drawImage(img1,i,j, panel);
 	 		panel.repaint();
 	 		
 	 		
 	    }
+	
+	private void setCurrentLocation(Point newLocation) {
+		this.currentLocation=newLocation;
+		
+	}
+
+	private void setCurrentSpeed(double currectspeed) {
+		this.currentSpeed=currectspeed;
+		
+	}
 	
 }
