@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
+import java.util.Observer;
 
 import javax.imageio.ImageIO;
 import game.arenas.Arena;
@@ -19,7 +20,7 @@ import utilities.Point;
 
 public abstract class Racer extends Observable implements IDrawable,Runnable {
 	
-	private Arena arena;
+	private Observer arena;
 	protected static int lastSerialNumber = 1;
 	private int serialNumber;
 	private String name;
@@ -31,7 +32,7 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 	private double acceleration;
 	private double currentSpeed;
 	protected boolean threadSuspended;
-	private double failureProbability; 
+	private double failureProbability=0; 
 	private EnumContainer.Color color; 
 	protected BufferedImage img1;
 	private Mishap mishap;
@@ -97,6 +98,7 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 	}
 
 	public Point move() {
+		
 		this.setChanged();
 		if(mishap!=null && mishap.isFixable() && mishap.getTurnsToFix()==0) {
 			mishap=null;
@@ -108,11 +110,20 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 			System.out.println(name + " Has a new mishap! " + mishap);
 			if(mishap.isFixable()) {
 				this.notifyObservers(Event.BROKENDOWN);
+				
 			}
 			else
-				this.notifyObservers(Event.DISABLED);
+				{this.notifyObservers(Event.DISABLED);
+				Thread.currentThread().interrupt();
+				}
+			
 		}
 		
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		if(mishap!=null && mishap.getTurnsToFix()>0) {
 			this.setCurrentSpeed(this.currentSpeed + mishap.getReductionFactor() * this.acceleration);
 			if(this.mishap.isFixable())
@@ -161,7 +172,9 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 	@Override
 	public void run() {
 		System.out.println("runing");
-		while(move().getX()<=finish.getX() && !isDisabled() );
+		while(move().getX()<=finish.getX() && !isDisabled() ) {
+			System.out.println(currentLocation.getX());
+		};
 		
 	}
 	
@@ -233,6 +246,10 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 			}
 	 		
 	    }
+	
+
+	
+	
 	@Override
 	public void drawObject(Graphics g)
     {		

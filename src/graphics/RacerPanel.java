@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import utilities.API;
+import utilities.EnumContainer;
 
 public class RacerPanel extends JPanel implements ActionListener {
 
@@ -32,8 +33,9 @@ public class RacerPanel extends JPanel implements ActionListener {
 	private JTextField speedMax;
 	private JTextField acceleration_field;
 	JComboBox<String> comboBox_1;
+	JComboBox<EnumContainer.Color> comboBox_2;
 	private static final long serialVersionUID = 1L;
-	private final static String[] colorList = {"RED", "GREEN", "BLUE", "BLACK", "YELLOW"};
+
 	/**
 	 * Create the panel.
 	 */
@@ -60,7 +62,7 @@ public class RacerPanel extends JPanel implements ActionListener {
 		lblNewLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		add(lblNewLabel);
 		
-		JComboBox<String> comboBox_2 = new JComboBox<String>(colorList);
+		comboBox_2 = new JComboBox<EnumContainer.Color>(EnumContainer.Color.values());
 		comboBox_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		comboBox_2.setBounds(63, 278, 122, 25);
 		comboBox_2.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -128,8 +130,7 @@ public class RacerPanel extends JPanel implements ActionListener {
 		if (!nameRacer.getText().equals("")){nameRacer.setBackground(Color.WHITE);name=nameRacer.getText();}else {nameRacer.setBackground(Color.RED);JOptionPane.showMessageDialog(this, "Invalid Content please enter Information","EROOR",JOptionPane.ERROR_MESSAGE);return;}
 		if (!acceleration_field.getText().equals("")){acceleration_field.setBackground(Color.WHITE);try {accel=Double.parseDouble(acceleration_field.getText());}catch (NumberFormatException e1){JOptionPane.showMessageDialog(this, "Enter numerical value","EROOR",JOptionPane.INFORMATION_MESSAGE);acceleration_field.setBackground(Color.ORANGE);	}}else {acceleration_field.setBackground(Color.RED);JOptionPane.showMessageDialog(this, "Invalid Content please enter Information","EROOR",JOptionPane.ERROR_MESSAGE);return;}
 		if (!speedMax.getText().equals("")){speedMax.setBackground(Color.WHITE);try {this.max_speed=Double.parseDouble(speedMax.getText());}catch (NumberFormatException e1){JOptionPane.showMessageDialog(this, "Enter numerical value","EROOR",JOptionPane.INFORMATION_MESSAGE);speedMax.setBackground(Color.ORANGE);}}else {speedMax.setBackground(Color.RED);JOptionPane.showMessageDialog(this, "Invalid Content please enter Information","EROOR",JOptionPane.ERROR_MESSAGE);return;}
-		
-		api.addRacer((String) comboBox_1.getSelectedItem(), name, max_speed, accel, utilities.EnumContainer.Color.BLUE);
+		api.addRacer((String) comboBox_1.getSelectedItem(), name, max_speed, accel,(EnumContainer.Color)comboBox_2.getSelectedItem());
 		
 	}
 	

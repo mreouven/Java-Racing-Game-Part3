@@ -15,6 +15,7 @@ public class API {
 	private Arena myArena;
 	public ArenaFrame arenaFrame;
 	private static ArrayList<Racer> racers;
+	
 	private static RaceBuilder builder = RaceBuilder.getInstance();
 	private static API instance;
 	private JComboBox<String> comboBox_1;
@@ -50,20 +51,16 @@ public class API {
 	public void setComboBox_1(JComboBox<String> comboBox_1) {
 		this.comboBox_1 = comboBox_1;
 	}
-
-	public void Start() {
-		//TODO REAPUYER SUR START
-		for (Racer racer : racers) {
-			try {
-				myArena.addRacer(racer);
-			} catch (RacerLimitException e) {
-				System.out.println("[Error] " + e.getMessage());
-			} catch (RacerTypeException e) {
-				System.out.println("[Error] " + e.getMessage());
-			}
-		}
-		myArena.initRace();
+	
+	public void resetGUI() {
 		arenaFrame.panel.field.repaint();
+	}
+	
+	public void Start() {
+		
+		myArena.initRace();
+		myArena.startRace();
+		resetGUI();
 		
 	}
 
@@ -81,11 +78,12 @@ public class API {
 		if(racers==null) {
 			racers=new ArrayList<>();
 		}
+		try {
 		switch (this.arena) {
 		case LAND:
 			try {
 				if(type.compareTo("Car")==0 || type.compareTo("Bicycle")==0)
-				racers.add(builder.buildWheeledRacer("game.racers.land."+type, name, maxSpeed, acceleration, color, 4));
+				myArena.addRacer(builder.buildWheeledRacer("game.racers.land."+type, name, maxSpeed, acceleration, color, 4));
 				else {
 					racers.add(builder.buildRacer("game.racers.land."+type, name, maxSpeed, acceleration, color));
 				}
@@ -97,7 +95,7 @@ public class API {
 			
 		case NAVAL:
 			try {
-				racers.add(builder.buildRacer("game.racers.naval."+type, name, maxSpeed, acceleration, color));
+				myArena.addRacer(builder.buildRacer("game.racers.naval."+type, name, maxSpeed, acceleration, color));
 			} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
 					| IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
 				e1.printStackTrace();
@@ -105,7 +103,7 @@ public class API {
 			break;
 		case AERA:
 			try {
-				racers.add(builder.buildWheeledRacer("game.racers.air."+type, name, maxSpeed, acceleration, color, 2));
+				myArena.addRacer(builder.buildWheeledRacer("game.racers.air."+type, name, maxSpeed, acceleration, color, 2));
 			} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
 					| IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
 				e1.printStackTrace();
@@ -114,7 +112,13 @@ public class API {
 		default:
 			break;
 		}
+		}	catch (RacerLimitException e) {
+			System.out.println("[Error] " + e.getMessage());
+		} catch (RacerTypeException e) {
+			System.out.println("[Error] " + e.getMessage());
+		}
 		System.out.println("racer added");
+		resetGUI();
 	}
 	
 	

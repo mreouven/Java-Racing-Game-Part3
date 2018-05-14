@@ -1,8 +1,5 @@
-/**
- * 
- */
 package utilities;
-/*
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
@@ -29,14 +26,14 @@ import utilities.EnumContainer.Color;
  */
 public class Program {
 
-	/*private static Arena arena;
+	private static Arena arena1;
 	private static RaceBuilder builder = RaceBuilder.getInstance();;
-	private static ArrayList<Racer> racers;
+	private static ArrayList<Racer> racers1;
 
 	private static void addRacersToArena() {
-		for (Racer racer : racers) {
+		for (Racer racer : racers1) {
 			try {
-				arena.addRacer(racer);
+				arena1.addRacer(racer);
 			} catch (RacerLimitException e) {
 				System.out.println("[Error] " + e.getMessage());
 			} catch (RacerTypeException e) {
@@ -47,20 +44,20 @@ public class Program {
 
 	private static void initAirRace() {
 		try {
-			arena = builder.buildArena("game.arenas.air.AerialArena", 1450, 4);
+			arena1 = builder.buildArena("game.arenas.air.AerialArena", 1450, 4);
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
 				| IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
 			System.out.println("Unable to build arena!");
-			arena = new AerialArena();
+			arena1 = new AerialArena();
 		}
-		racers = new ArrayList<>();
+		racers1 = new ArrayList<>();
 		try {
-			racers.add(builder.buildWheeledRacer("game.racers.air.Airplane", "Bob", 220, 10, Color.BLUE, 3));
-			racers.add(builder.buildWheeledRacer("game.racers.air.Airplane", "John", 175, 20, Color.BLUE, 3));
-			racers.add(builder.buildWheeledRacer("game.racers.air.Airplane", "Frank", 180, 15, Color.BLUE, 3));
-			racers.add(builder.buildRacer("game.racers.air.Helicopter", "Matt", 230, 8, Color.RED));
-			racers.add(builder.buildWheeledRacer("game.racers.land.Car", "car", 15, 1, Color.GREEN, 3));
-			racers.add(builder.buildRacer("game.racers.air.Helicopter", "Alby", 200, 8, Color.BLUE));
+			racers1.add(builder.buildWheeledRacer("game.racers.air.Airplane", "Bob", 220, 10, Color.BLUE, 3));
+			racers1.add(builder.buildWheeledRacer("game.racers.air.Airplane", "John", 175, 20, Color.BLUE, 3));
+			racers1.add(builder.buildWheeledRacer("game.racers.air.Airplane", "Frank", 180, 15, Color.BLUE, 3));
+			racers1.add(builder.buildRacer("game.racers.air.Helicopter", "Matt", 230, 8, Color.RED));
+			racers1.add(builder.buildWheeledRacer("game.racers.land.Car", "car", 15, 1, Color.GREEN, 3));
+			racers1.add(builder.buildRacer("game.racers.air.Helicopter", "Alby", 200, 8, Color.BLUE));
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
 				| IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
 			e1.printStackTrace();
@@ -71,20 +68,20 @@ public class Program {
 
 	private static void initLandRace() {
 		try {
-			arena = builder.buildArena("game.arenas.land.LandArena", 1450, 8);
+			arena1 = builder.buildArena("game.arenas.land.LandArena", 1450, 8);
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
 				| IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
 			System.out.println("Unable to build arena!");
-			arena = new LandArena();
+			arena1 = new LandArena();
 		}
-		racers = new ArrayList<>();
+		racers1 = new ArrayList<>();
 		try {
-			racers.add(builder.buildWheeledRacer("game.racers.land.Car", "Bob", 220, 10, Color.BLUE, 4));
-			racers.add(builder.buildWheeledRacer("game.racers.land.Car", "John", 175, 20, Color.BLUE, 4));
-			racers.add(builder.buildRacer("game.racers.land.Horse", "Frank", 180, 15, Color.BLUE));
-			racers.add(builder.buildRacer("game.racers.land.Horse", "Matt", 230, 8, Color.RED));
-			racers.add(builder.buildWheeledRacer("game.racers.land.Bicycle", "Timmy", 15, 1, Color.GREEN, 3));
-			racers.add(builder.buildRacer("game.racers.air.Helicopter", "Alby", 200, 8, Color.BLUE));
+			racers1.add(builder.buildWheeledRacer("game.racers.land.Car", "Bob", 220, 10, Color.BLUE, 4));
+			racers1.add(builder.buildWheeledRacer("game.racers.land.Car", "John", 175, 20, Color.BLUE, 4));
+			racers1.add(builder.buildRacer("game.racers.land.Horse", "Frank", 180, 15, Color.BLUE));
+			racers1.add(builder.buildRacer("game.racers.land.Horse", "Matt", 230, 8, Color.RED));
+			racers1.add(builder.buildWheeledRacer("game.racers.land.Bicycle", "Timmy", 15, 1, Color.GREEN, 3));
+			racers1.add(builder.buildRacer("game.racers.air.Helicopter", "Alby", 200, 8, Color.BLUE));
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
 				| IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
 			e1.printStackTrace();
@@ -95,19 +92,19 @@ public class Program {
 
 	private static void initNavalRace() {
 		try {
-			arena = builder.buildArena("game.arenas.naval.NavalArena", 1225, 2);
+			arena1 = builder.buildArena("game.arenas.naval.NavalArena", 1225, 2);
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
 				| IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
 			System.out.println("Unable to build arena!");
-			arena = new NavalArena();
+			arena1 = new NavalArena();
 		}
-		racers = new ArrayList<>();
+		racers1 = new ArrayList<>();
 		try {
-			racers.add(builder.buildRacer("game.racers.naval.RowBoat", "Bob", 220, 10, Color.BLUE));
-			racers.add(builder.buildRacer("game.racers.naval.SpeedBoat", "John", 175, 20, Color.BLUE));
-			racers.add(builder.buildRacer("game.racers.naval.RowBoat", "Matt", 230, 8, Color.RED));
-			racers.add(builder.buildWheeledRacer("game.racers.land.Car", "car", 15, 1, Color.GREEN, 3));
-			racers.add(builder.buildRacer("game.racers.land.Car", "car", 15, 1, Color.GREEN)); // intentional exception!
+			racers1.add(builder.buildRacer("game.racers.naval.RowBoat", "Bob", 220, 10, Color.BLUE));
+			racers1.add(builder.buildRacer("game.racers.naval.SpeedBoat", "John", 175, 20, Color.BLUE));
+			racers1.add(builder.buildRacer("game.racers.naval.RowBoat", "Matt", 230, 8, Color.RED));
+			racers1.add(builder.buildWheeledRacer("game.racers.land.Car", "car", 15, 1, Color.GREEN, 3));
+			racers1.add(builder.buildRacer("game.racers.land.Car", "car", 15, 1, Color.GREEN)); // intentional exception!
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
 				| IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
 			e1.printStackTrace();
@@ -117,7 +114,7 @@ public class Program {
 
 	/**
 	 * @param args
-	 *//*
+	 */
 	public static void main(String[] args) {
 		Fate.setSeed(477734503); // to get same "random" results every run;
 		////////////////////////////////////////////
@@ -126,33 +123,19 @@ public class Program {
 		////////////////////////////////////////////
 		System.out.println("New Air Race");
 		initAirRace();
-		arena.initRace();
-		startRace();
-		arena.showResults();
-		////////////////////////////////////////////
-		System.out.println("----------");
-		System.out.println("New Land Race");
-		initLandRace();
-		arena.initRace();
-		startRace();
-		arena.showResults();
-		////////////////////////////////////////////
-		System.out.println("----------");
-		System.out.println("New Naval Race");
-		initNavalRace();
-		arena.initRace();
-		startRace();
-		arena.showResults();
+		arena1.initRace();
+		arena1.startRace();
+		
 
 	}
 
 	private static void startRace() {
 		System.out.println("Introduction: ");
-		for (Racer racer : arena.getActiveRacers())
+		for (Racer racer : arena1.getActiveRacers())
 			racer.introduce();
 		System.out.println("Strat Race!");
-		while (arena.hasActiveRacers()) {
-			arena.playTurn();
+		while (arena1.hasActiveRacers()) {
+			arena1.playTurn();
 		}
 		System.out.println("Race Compleated!");
 	}
@@ -168,11 +151,11 @@ public class Program {
 		(new RowBoat()).introduce();
 		System.out.println("End of test.");
 	}
-*/
-}
 
-// output
+}
 /*
+// output
+
 Testing default valus and introduction.
 [Car] name: Car #1, SerialNumber: 1, maxSpeed: 400.0, acceleration: 20.0, color: RED, Number of Wheels: 4, Engine Type: MOUNTAIN
 [Horse] name: Horse #2, SerialNumber: 2, maxSpeed: 50.0, acceleration: 3.0, color: BLACK, Breed: THOROUGHBRED

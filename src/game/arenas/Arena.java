@@ -2,6 +2,7 @@ package game.arenas;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.ExecutorService;
@@ -11,6 +12,7 @@ import game.arenas.exceptions.RacerLimitException;
 import game.arenas.exceptions.RacerTypeException;
 import game.racers.Racer;
 import graphics.ArenaField;
+import utilities.API;
 import utilities.EnumContainer;
 import utilities.Point;
 
@@ -58,8 +60,9 @@ public abstract class Arena implements Observer{
 		
 	}
 	public void startRace() {
-		ExecutorService pool=Executors.newFixedThreadPool(MAX_RACERS);
-		this.initRace();
+		ExecutorService pool=Executors.newFixedThreadPool(activeRacers.size());
+		
+		
 		for (Racer racer : activeRacers)
 			pool.execute(racer);
 		
@@ -69,7 +72,10 @@ public abstract class Arena implements Observer{
 		if (this.activeRacers.size() == this.MAX_RACERS) {
 			throw new RacerLimitException(this.MAX_RACERS, newRacer.getSerialNumber());
 		}
+		newRacer.addObserver(this);
+		newRacer.initRace(this, new Point(0, 0), new Point(this.length, 0));
 		this.activeRacers.add(newRacer);
+		
 	}
 
 	public void crossFinishLine(Racer racer) {
@@ -151,7 +157,7 @@ public abstract class Arena implements Observer{
 		default:			
 			break;
 		}
-		
+		API.getInstance().resetGUI();
 	} 	
 	
 }

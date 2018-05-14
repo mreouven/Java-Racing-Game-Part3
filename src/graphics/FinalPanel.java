@@ -3,15 +3,13 @@ package graphics;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import utilities.API;
-
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
 public class FinalPanel extends JPanel implements ActionListener{
-	private static API api = API.getInstance();
+	//private static API api = API.getInstance();
 	public ArenaField field;
 	public ControlPane control;
 	/**
