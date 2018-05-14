@@ -20,7 +20,6 @@ import utilities.Point;
 public abstract class Racer extends Observable implements IDrawable,Runnable {
 	
 	private Arena arena;
-	
 	protected static int lastSerialNumber = 1;
 	private int serialNumber;
 	private String name;
@@ -34,10 +33,12 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 	protected boolean threadSuspended;
 	private double failureProbability; 
 	private EnumContainer.Color color; 
-	private ArenaField panel;
 	protected BufferedImage img1;
 	private Mishap mishap;
-	
+	private static double counter=0;
+	private static void counter() {
+		counter+=250;
+	}
 	
 	
 	public String getName() {
@@ -64,13 +65,13 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 	 * @param acceleration
 	 * @param color
 	 */
-	public Racer(String name, double maxSpeed, double acceleration, utilities.EnumContainer.Color color, ArenaField _pan) {
+	public Racer(String name, double maxSpeed, double acceleration, utilities.EnumContainer.Color color) {
 		this.serialNumber = Racer.lastSerialNumber++;
 		this.name = name;
 		this.maxSpeed = maxSpeed;
 		this.acceleration = acceleration;
 		this.color = color;
-		this.panel=_pan;
+	
 	}
 
 	public abstract String className();
@@ -148,7 +149,8 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 
 	public void initRace(Arena arena, Point start, Point finish) {
 		this.arena = arena;
-		this.currentLocation = new Point(start);
+		this.currentLocation = new Point(start.getX(),counter);
+		counter();
 		this.finish = new Point(finish);
 	}
 
@@ -223,13 +225,19 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 	}
 
 	
-	public void drawObject(Graphics g,int i,int j)
-	    {		
-	 		g.drawImage(img1,i,j, panel);
-	 		panel.repaint();
-	 		
+	public void drawObject(Graphics g,ArenaField panel)
+	    {	
+			if(currentLocation!=null) {
+		 		g.drawImage(img1,(int)currentLocation.getX(),(int)currentLocation.getY(),150,150, panel);
+		 		panel.repaint();
+			}
 	 		
 	    }
+	@Override
+	public void drawObject(Graphics g)
+    {		
+		
+    }
 	
 	private void setCurrentLocation(Point newLocation) {
 		this.currentLocation=newLocation;

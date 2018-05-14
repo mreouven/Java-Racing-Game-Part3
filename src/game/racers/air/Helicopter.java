@@ -1,7 +1,7 @@
 package game.racers.air;
 
+
 import game.racers.Racer;
-import graphics.ArenaPanel;
 import utilities.EnumContainer.Color;
 
 
@@ -13,9 +13,9 @@ public class Helicopter extends Racer implements IAerialRacer {
 	private static final double DEFAULT_ACCELERATION = 50;
 	private static final Color DEFAULT_color = Color.BLUE;
 
-	public Helicopter(ArenaPanel panel) {
+	public Helicopter() {
 		this(CLASS_NAME + " #" + lastSerialNumber, DEFAULT_MAX_SPEED, DEFAULT_ACCELERATION, DEFAULT_color,
-				DEFAULT_WHEELS,panel);
+				DEFAULT_WHEELS);
 	}
 
 	/**
@@ -25,8 +25,9 @@ public class Helicopter extends Racer implements IAerialRacer {
 	 * @param color
 	 */
 	public Helicopter(String name, double maxSpeed, double acceleration, utilities.EnumContainer.Color color,
-			int numOfWheels,ArenaPanel _pan) {
-		super(name, maxSpeed, acceleration, color,_pan);
+			int numOfWheels) {
+		super(name, maxSpeed, acceleration, color);
+		loadImages("Helicopter");
 	}
 
 	@Override
@@ -38,4 +39,6 @@ public class Helicopter extends Racer implements IAerialRacer {
 	public String describeSpecific() {
 		return "";
 	}
+
+	
 }

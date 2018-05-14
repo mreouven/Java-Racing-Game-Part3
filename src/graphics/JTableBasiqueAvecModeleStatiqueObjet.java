@@ -1,4 +1,4 @@
-package graphics;
+/*package graphics;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,9 +16,9 @@ import utilities.Point;
 
 
 public class JTableBasiqueAvecModeleStatiqueObjet extends JFrame {
-    /**
+    *//**
 	 * 
-	 */
+	 *//*
 	private static final long serialVersionUID = 1L;
 
 
@@ -40,9 +40,9 @@ public class JTableBasiqueAvecModeleStatiqueObjet extends JFrame {
     }
 
     public class ModeleStatiqueObjet extends AbstractTableModel {
-        /**
+        *//**
 		 * 
-		 */
+		 *//*
 		private static final long serialVersionUID = 1L;
 
 		private final List infos = new List();
@@ -137,4 +137,4 @@ public class JTableBasiqueAvecModeleStatiqueObjet extends JFrame {
 		    }    
 		    
 		    
-}
+}*/

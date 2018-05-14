@@ -1,8 +1,8 @@
 package game.racers.air;
 
+
 import game.racers.Racer;
 import game.racers.Wheeled;
-import graphics.ArenaField;
 import utilities.EnumContainer.Color;
 
 
@@ -17,9 +17,9 @@ public class Airplane extends Racer implements IAerialRacer {
 	private static final Color DEFAULT_color = Color.BLACK;
 	
 
-	public Airplane(ArenaField panel) {
+	public Airplane() {
 		this(CLASS_NAME + " #" + lastSerialNumber, DEFAULT_MAX_SPEED, DEFAULT_ACCELERATION, DEFAULT_color,
-				DEFAULT_WHEELS,panel);
+				DEFAULT_WHEELS);
 	}
 	 
 	/**
@@ -29,8 +29,8 @@ public class Airplane extends Racer implements IAerialRacer {
 	 * @param color
 	 */
 	public Airplane(String name, double maxSpeed, double acceleration, utilities.EnumContainer.Color color,
-			int numOfWheels,ArenaField _pan) {
-		super(name, maxSpeed, acceleration, color,_pan);
+			int numOfWheels) {
+		super(name, maxSpeed, acceleration, color);
 		this.wheeled = new Wheeled(numOfWheels);
 		loadImages("Airplane");
 	}
@@ -44,4 +44,6 @@ public class Airplane extends Racer implements IAerialRacer {
 	public String describeSpecific() {
 		return this.wheeled.describeSpecific();
 	}
+
+	
 }

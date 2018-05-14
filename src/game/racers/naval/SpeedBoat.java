@@ -1,7 +1,6 @@
 package game.racers.naval;
 
 import game.racers.Racer;
-import graphics.ArenaPanel;
 import utilities.EnumContainer;
 import utilities.EnumContainer.BoatType;
 import utilities.EnumContainer.Color;
@@ -17,14 +16,15 @@ public class SpeedBoat extends Racer implements INavalRacer {
 	private EnumContainer.BoatType type;
 	private EnumContainer.Team team;
 
-	public SpeedBoat(ArenaPanel panel) {
-		this(CLASS_NAME + " #" + lastSerialNumber, DEFAULT_MAX_SPEED, DEFAULT_ACCELERATION, DEFAULT_color,panel);
+	public SpeedBoat() {
+		this(CLASS_NAME + " #" + lastSerialNumber, DEFAULT_MAX_SPEED, DEFAULT_ACCELERATION, DEFAULT_color);
 	}
 
-	public SpeedBoat(String name, double maxSpeed, double acceleration, utilities.EnumContainer.Color color,ArenaPanel panel) {
-		super(name, maxSpeed, acceleration, color,panel);
+	public SpeedBoat(String name, double maxSpeed, double acceleration, utilities.EnumContainer.Color color) {
+		super(name, maxSpeed, acceleration, color);
 		this.type = BoatType.SKULLING;
 		this.team = Team.DOUBLE;
+		loadImages("SpeedBoat");
 	}
 
 	@Override

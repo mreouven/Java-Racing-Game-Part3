@@ -8,23 +8,28 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import utilities.API;
+
 public class CtrlPanel extends JPanel {
 
 	/**
 	 * 
 	 */
+	public ArenaField field;
+	private static API api = API.getInstance();
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Create the panel.
 	 */
-	public CtrlPanel() {
-		
+	public CtrlPanel(JPanel field) {
+		this.field=(ArenaField) field;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		JButton btnNewButton_1 = new JButton("Start Race");
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				api.Start();
 			}
 		});
 		btnNewButton_1.setBounds(51, 517, 150, 33);

@@ -3,6 +3,9 @@ package graphics;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import utilities.API;
+import utilities.EnumContainer.Arena;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -20,21 +23,25 @@ public class ArenalPanel extends JPanel implements ActionListener {
 	/**
 	 * 
 	 */
-	private final static String[] arenaList = { "Land Arena", "Naval Arena", "Aeral Arena"};
+	private final static String[] arenaList = { "LandArena", "NavalArena", "AerialArena"};
 	private static final long serialVersionUID = 1L;
+	private static API api = API.getInstance();
+	double lenght=-1;
+	int max_racer=-1;
+	public ArenaField field;
+	private JTextField lenght_text;
+	private JTextField racer_text;
+	JComboBox<String> comboBox;
 	
-	
-	private JTextField textField;
-
 
 	/**
 	 * Create the panel.
 	 */
-	public ArenalPanel() {
+	public ArenalPanel(JPanel field) {
+		
+		this.field=(ArenaField) field;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setSize(187,126);
-		
-		
 		JLabel lblChooseArena = new JLabel("Choose Arena:");
 		lblChooseArena.setFont(new Font("Tahoma", Font.PLAIN, 16 ));
 		//lblChooseArena.setBounds(64, 0, 112, 25);
@@ -42,12 +49,13 @@ public class ArenalPanel extends JPanel implements ActionListener {
 		add(lblChooseArena);
 		add(Box.createGlue()); 
 		
-		JComboBox<String> comboBox = new JComboBox<String>(arenaList);
+		comboBox = new JComboBox<String>(arenaList);
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		//comboBox.setBounds(63, 28, 113, 25);
 		comboBox.setAlignmentX(Component.CENTER_ALIGNMENT);
 		add(comboBox);
 		add(Box.createGlue()); 
+		
 		
 		JLabel lblArenaLenght = new JLabel("Arena Lenght:");
 		lblArenaLenght.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -57,12 +65,29 @@ public class ArenalPanel extends JPanel implements ActionListener {
 		add(Box.createGlue()); 
 		
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lenght_text = new JTextField();
+		lenght_text.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		//textField.setBounds(63, 74, 113, 33);
-		textField.setAlignmentX(Component.CENTER_ALIGNMENT);
-		add(textField);
-		textField.setColumns(10);
+		lenght_text.setAlignmentX(Component.CENTER_ALIGNMENT);
+		add(lenght_text);
+		lenght_text.setColumns(10);
+		
+		JLabel lblArenaMracer = new JLabel("Max Racer:");
+		lblArenaMracer.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblArenaMracer.setBounds(63, 53, 112, 25);
+		lblArenaMracer.setAlignmentX(Component.CENTER_ALIGNMENT);
+		add(lblArenaMracer);
+		add(Box.createGlue()); 
+		
+		
+		
+		
+		racer_text = new JTextField();
+		racer_text.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		racer_text.setAlignmentX(Component.CENTER_ALIGNMENT);
+		add(racer_text);
+		racer_text.setColumns(10);
+		
 		
 		
 		add(Box.createGlue()); 
@@ -78,23 +103,63 @@ public class ArenalPanel extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (!textField.getText().equals(""))
+	if (!lenght_text.getText().equals(""))
 		{
-		textField.setBackground(Color.WHITE);
+		lenght_text.setBackground(Color.WHITE);
 		try {
-			Integer.parseInt(textField.getText());
+			lenght=Integer.parseInt(lenght_text.getText());
 		} catch (NumberFormatException e1){
 			JOptionPane.showMessageDialog(this, "Enter numerical value","EROOR",JOptionPane.INFORMATION_MESSAGE);
-			textField.setBackground(Color.ORANGE);
+			lenght_text.setBackground(Color.ORANGE);
 		}
+		}
+		else {
+			lenght_text.setBackground(Color.RED);
+			JOptionPane.showMessageDialog(this, "Invalid Content please enter Information","EROOR",JOptionPane.ERROR_MESSAGE);
+			
+		}
+	
+	if (!racer_text.getText().equals(""))
+	{
+		racer_text.setBackground(Color.WHITE);
+	try {
+		max_racer=Integer.parseInt(racer_text.getText());
+	} catch (NumberFormatException e1){
+		JOptionPane.showMessageDialog(this, "Enter numerical value","EROOR",JOptionPane.INFORMATION_MESSAGE);
+		racer_text.setBackground(Color.ORANGE);
+	}
 	}
 	else {
-		textField.setBackground(Color.RED);
+		racer_text.setBackground(Color.RED);
 		JOptionPane.showMessageDialog(this, "Invalid Content please enter Information","EROOR",JOptionPane.ERROR_MESSAGE);
 		
 	}
-		
-	}
 	
-
+	if(lenght !=-1 && max_racer != -1) {
+		switch ((String) comboBox.getSelectedItem()) {
+	
+			case "LandArena":
+				api.BuildArena("land.LandArena", lenght, max_racer);
+				this.field.setBackgr(Arena.LAND);
+				api.setArenaType(Arena.LAND);
+				break;
+			case "NavalArena":
+				api.BuildArena("naval.NavalArena", lenght, max_racer);
+				this.field.setBackgr(Arena.NAVAL);
+				api.setArenaType(Arena.NAVAL);
+				break;
+			case "AerialArena":
+				api.BuildArena("air.AerialArena", lenght, max_racer);
+				this.field.setBackgr(Arena.AERA);
+				api.setArenaType(Arena.AERA);
+				break;
+			default:
+				break;
+		}
+		api.setRacerChoose();
+		
+			
+			
+		}
+	}
 }

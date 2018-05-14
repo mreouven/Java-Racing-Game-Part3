@@ -1,6 +1,8 @@
 package game.arenas;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -8,6 +10,7 @@ import java.util.concurrent.Executors;
 import game.arenas.exceptions.RacerLimitException;
 import game.arenas.exceptions.RacerTypeException;
 import game.racers.Racer;
+import graphics.ArenaField;
 import utilities.EnumContainer;
 import utilities.Point;
 
@@ -41,6 +44,17 @@ public abstract class Arena implements Observer{
 		this.compleatedRacers = new ArrayList<Racer>();
 		this.brokenRacers = new ArrayList<Racer>();
 		this.disabledRacers = new ArrayList<Racer>();
+	}
+	public void drawObject(Graphics g,ArenaField panel) {
+		for (Racer racer : activeRacers) {
+			racer.drawObject(g, panel);
+		}
+		for (Racer racer : brokenRacers) {
+			racer.drawObject(g, panel);
+		}
+		for (Racer racer : compleatedRacers) {
+			racer.drawObject(g, panel);
+		}
 		
 	}
 	public void startRace() {
@@ -86,7 +100,7 @@ public abstract class Arena implements Observer{
 
 	public void playTurn() {
 		for (Racer racer : this.activeRacers) {
-			racer.move(this.FRICTION);
+			racer.move();
 		}
 
 		for (Racer r : this.compleatedRacers)
@@ -136,7 +150,8 @@ public abstract class Arena implements Observer{
 			break;
 		default:			
 			break;
-		}		
+		}
+		
 	} 	
 	
 }

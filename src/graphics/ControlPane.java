@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 
 public class ControlPane extends JPanel implements ActionListener {
-
+	public ArenaField field;
 	public ArenalPanel onep;
 	public RacerPanel twop;
 	public CtrlPanel threep;
@@ -19,10 +19,11 @@ public class ControlPane extends JPanel implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public ControlPane() {
-		ArenalPanel onep=new ArenalPanel();
-		RacerPanel twop=new RacerPanel();
-		CtrlPanel threep=new CtrlPanel();
+	public ControlPane(JPanel field) {
+		this.field=(ArenaField) field;
+		ArenalPanel onep=new ArenalPanel(this.field);
+		RacerPanel twop=new RacerPanel(this.field);
+		CtrlPanel threep=new CtrlPanel(this.field);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setPreferredSize(new Dimension(200, 500));
 		onep.setBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK));

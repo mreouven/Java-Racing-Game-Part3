@@ -1,7 +1,6 @@
 package game.racers.land;
 
 import game.racers.Racer;
-import graphics.ArenaPanel;
 import utilities.EnumContainer;
 import utilities.EnumContainer.Breed;
 import utilities.EnumContainer.Color;
@@ -16,13 +15,14 @@ public class Horse extends Racer implements ILandRacer {
 
 	private EnumContainer.Breed breed;
 
-	public Horse(ArenaPanel panel) {
-		this(CLASS_NAME + " #" + lastSerialNumber, DEFAULT_MAX_SPEED, DEFAULT_ACCELERATION, DEFAULT_color,panel);
+	public Horse() {
+		this(CLASS_NAME + " #" + lastSerialNumber, DEFAULT_MAX_SPEED, DEFAULT_ACCELERATION, DEFAULT_color);
 	}
 
-	public Horse(String name, double maxSpeed, double acceleration, utilities.EnumContainer.Color color,ArenaPanel panel) {
-		super(name, maxSpeed, acceleration, color,panel);
+	public Horse(String name, double maxSpeed, double acceleration, utilities.EnumContainer.Color color) {
+		super(name, maxSpeed, acceleration, color);
 		this.breed = Breed.THOROUGHBRED;
+		loadImages("Horse");
 	}
 
 	@Override

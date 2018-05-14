@@ -2,7 +2,6 @@ package game.racers.land;
 
 import game.racers.Racer;
 import game.racers.Wheeled;
-import graphics.ArenaPanel;
 import utilities.EnumContainer.Color;
 import utilities.EnumContainer.Engine;
 
@@ -18,16 +17,17 @@ public class Car extends Racer implements ILandRacer {
 	private Engine engine;
 	private Wheeled wheeled;
 
-	public Car(ArenaPanel panel) {
+	public Car() {
 		this(CLASS_NAME + " #" + lastSerialNumber, DEFAULT_MAX_SPEED, DEFAULT_ACCELERATION, DEFAULT_color,
-				DEFAULT_WHEELS,panel);
+				DEFAULT_WHEELS);
 	}
 
 	public Car(String name, double maxSpeed, double acceleration, utilities.EnumContainer.Color color,
-			int numOfWheels,ArenaPanel _pan) {
-		super(name, maxSpeed, acceleration, color,_pan);
+			int numOfWheels) {
+		super(name, maxSpeed, acceleration, color);
 		this.wheeled = new Wheeled(numOfWheels);
 		this.engine = Engine.FOURSTROKE;
+		loadImages("Car");
 	}
 
 	@Override

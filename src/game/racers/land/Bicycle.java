@@ -2,7 +2,7 @@ package game.racers.land;
 
 import game.racers.Racer;
 import game.racers.Wheeled;
-import graphics.ArenaPanel;
+
 import utilities.EnumContainer;
 import utilities.EnumContainer.BicycleType;
 import utilities.EnumContainer.Color;
@@ -20,15 +20,16 @@ public class Bicycle extends Racer implements ILandRacer {
 	private EnumContainer.BicycleType type;
 	private Wheeled wheeled;
 
-	public Bicycle(ArenaPanel panel) {
-		this(DEFUALT_NAME, DEFAULT_MAX_SPEED, DEFAULT_ACCELERATION, DEFAULT_color, DEFAULT_WHEELS,panel);
+	public Bicycle() {
+		this(DEFUALT_NAME, DEFAULT_MAX_SPEED, DEFAULT_ACCELERATION, DEFAULT_color, DEFAULT_WHEELS);
 	}
 
 	public Bicycle(String name, double maxSpeed, double acceleration, utilities.EnumContainer.Color color,
-			int numOfWheels,ArenaPanel _pan) {
-		super(name, maxSpeed, acceleration, color,_pan);
+			int numOfWheels) {
+		super(name, maxSpeed, acceleration, color);
 		this.wheeled = new Wheeled(numOfWheels);
 		this.type = BicycleType.MOUNTAIN;
+		loadImages("Bicycle");
 	}
 
 	@Override

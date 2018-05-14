@@ -1,29 +1,44 @@
 package graphics;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class RacerPanel extends JPanel {
+import utilities.API;
+
+public class RacerPanel extends JPanel implements ActionListener {
 
 	/**
 	 * 
 	 */
 	
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private String name="";
+	private double accel=-1;
+	private double max_speed=-1;
+	private static API api = API.getInstance();
+	public ArenaField field;
+	private JTextField nameRacer;
+	private JTextField speedMax;
+	private JTextField acceleration_field;
+	JComboBox<String> comboBox_1;
 	private static final long serialVersionUID = 1L;
 	private final static String[] colorList = {"RED", "GREEN", "BLUE", "BLACK", "YELLOW"};
 	/**
 	 * Create the panel.
 	 */
-	public RacerPanel() {
+	public RacerPanel(JPanel field) {
+		this.field=(ArenaField) field;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		JLabel lblChooseRacer = new JLabel("Choose Racer: ");
@@ -32,7 +47,8 @@ public class RacerPanel extends JPanel {
 		lblChooseRacer.setAlignmentX(Component.CENTER_ALIGNMENT);
 		add(lblChooseRacer);
 		
-		JComboBox<String> comboBox_1 = new JComboBox<String>();
+		comboBox_1 = new JComboBox<String>();
+		api.setComboBox_1(comboBox_1);
 		comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		comboBox_1.setBounds(61, 232, 122, 25);
 		comboBox_1.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -56,12 +72,12 @@ public class RacerPanel extends JPanel {
 		lblRacerName.setAlignmentX(Component.CENTER_ALIGNMENT);
 		add(lblRacerName);
 		
-		textField_2 = new JTextField();
-		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField_2.setBounds(63, 321, 113, 33);
-		textField_2.setAlignmentX(Component.CENTER_ALIGNMENT);
-		add(textField_2);
-		textField_2.setColumns(10);
+		nameRacer = new JTextField();
+		nameRacer.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		nameRacer.setBounds(63, 321, 113, 33);
+		nameRacer.setAlignmentX(Component.CENTER_ALIGNMENT);
+		add(nameRacer);
+		nameRacer.setColumns(10);
 		
 		JLabel lblMaxSpeed = new JLabel("Max Speed:");
 		lblMaxSpeed.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -70,11 +86,11 @@ public class RacerPanel extends JPanel {
 		add(lblMaxSpeed);
 		
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(63, 370, 113, 33);
-		textField_3.setAlignmentX(Component.CENTER_ALIGNMENT);
-		add(textField_3);
-		textField_3.setColumns(10);
+		speedMax = new JTextField();
+		speedMax.setBounds(63, 370, 113, 33);
+		speedMax.setAlignmentX(Component.CENTER_ALIGNMENT);
+		add(speedMax);
+		speedMax.setColumns(10);
 		
 	
 		
@@ -84,11 +100,39 @@ public class RacerPanel extends JPanel {
 		lblAcceleration.setAlignmentX(Component.CENTER_ALIGNMENT);
 		add(lblAcceleration);
 		
-		textField_4 = new JTextField();
-		textField_4.setBounds(63, 422, 113, 33);
-		textField_4.setAlignmentX(Component.CENTER_ALIGNMENT);
-		add(textField_4);
-		textField_4.setColumns(10);
+		acceleration_field = new JTextField();
+		acceleration_field.setBounds(63, 422, 113, 33);
+		acceleration_field.setAlignmentX(Component.CENTER_ALIGNMENT);
+		add(acceleration_field);
+		acceleration_field.setColumns(10);
+		
+		add(Box.createGlue()); 
+		JButton btnNewButton = new JButton("Add racer");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		//btnNewButton.setBounds(51, 160, 150, 33);
+		btnNewButton.addActionListener(this);
+		btnNewButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		add(btnNewButton);
+		add(Box.createGlue()); 
+		
+		
 	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		;
+		if(comboBox_1.getItemCount()<=0) {
+			JOptionPane.showMessageDialog(this, "Build Arena first","ERROR",JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		speedMax.setBackground(Color.WHITE);
+		if (!nameRacer.getText().equals("")){nameRacer.setBackground(Color.WHITE);name=nameRacer.getText();}else {nameRacer.setBackground(Color.RED);JOptionPane.showMessageDialog(this, "Invalid Content please enter Information","EROOR",JOptionPane.ERROR_MESSAGE);return;}
+		if (!acceleration_field.getText().equals("")){acceleration_field.setBackground(Color.WHITE);try {accel=Double.parseDouble(acceleration_field.getText());}catch (NumberFormatException e1){JOptionPane.showMessageDialog(this, "Enter numerical value","EROOR",JOptionPane.INFORMATION_MESSAGE);acceleration_field.setBackground(Color.ORANGE);	}}else {acceleration_field.setBackground(Color.RED);JOptionPane.showMessageDialog(this, "Invalid Content please enter Information","EROOR",JOptionPane.ERROR_MESSAGE);return;}
+		if (!speedMax.getText().equals("")){speedMax.setBackground(Color.WHITE);try {this.max_speed=Double.parseDouble(speedMax.getText());}catch (NumberFormatException e1){JOptionPane.showMessageDialog(this, "Enter numerical value","EROOR",JOptionPane.INFORMATION_MESSAGE);speedMax.setBackground(Color.ORANGE);}}else {speedMax.setBackground(Color.RED);JOptionPane.showMessageDialog(this, "Invalid Content please enter Information","EROOR",JOptionPane.ERROR_MESSAGE);return;}
+		
+		api.addRacer((String) comboBox_1.getSelectedItem(), name, max_speed, accel, utilities.EnumContainer.Color.BLUE);
+		
+	}
+	
+	
 
 }
