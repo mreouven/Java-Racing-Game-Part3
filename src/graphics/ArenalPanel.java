@@ -139,24 +139,27 @@ public class ArenalPanel extends JPanel implements ActionListener {
 		switch ((String) comboBox.getSelectedItem()) {
 	
 			case "LandArena":
+				api.setArenaType(Arena.LAND);
 				api.BuildArena("land.LandArena", lenght, max_racer);
 				this.field.setBackgr(Arena.LAND);
-				api.setArenaType(Arena.LAND);
+				
 				break;
 			case "NavalArena":
+				api.setArenaType(Arena.NAVAL);
 				api.BuildArena("naval.NavalArena", lenght, max_racer);
 				this.field.setBackgr(Arena.NAVAL);
-				api.setArenaType(Arena.NAVAL);
+				
 				break;
 			case "AerialArena":
+				api.setArenaType(Arena.AERA);
 				api.BuildArena("air.AerialArena", lenght, max_racer);
 				this.field.setBackgr(Arena.AERA);
-				api.setArenaType(Arena.AERA);
+				
 				break;
 			default:
 				break;
 		}
-		api.setRacerChoose();
+	
 		
 			
 			

@@ -48,7 +48,7 @@ public class ArenaField extends JPanel implements ActionListener {
 		   	if(bgr && (backroun!=null))
 	            g.drawImage(backroun, 0, 0, getWidth(), getHeight(), this);
 		   		if(api.getArena()!=null)
-		   			{//System.out.println("ok");
+		   			{
 		   			api.getArena().drawObject(g, this);}
 		   
 		   	
@@ -79,9 +79,7 @@ public class ArenaField extends JPanel implements ActionListener {
 			   bgr = true;
 			     
 		   }
-		   
 		   repaint();
-	
 	}
 	
 	

@@ -31,17 +31,13 @@ public class ArenaFrame extends JFrame implements ActionListener {
 		 
 	   }
 	public ArenaFrame() {
-		
 		super("Arena");
-		
-		
-		 
-		panel =new FinalPanel();
+		panel = new FinalPanel();
 		add(panel);
 	    panel.setVisible(true);
 	    api.setArenaFrame(this);
-		
 	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		

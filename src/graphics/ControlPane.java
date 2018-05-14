@@ -2,15 +2,13 @@ package graphics;
 
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 
-public class ControlPane extends JPanel implements ActionListener {
+public class ControlPane extends JPanel {
 	public ArenaField field;
 	public ArenalPanel onep;
 	public RacerPanel twop;
@@ -34,11 +32,7 @@ public class ControlPane extends JPanel implements ActionListener {
 		add(twop);
 		add(threep);
 	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+
 	
 	
 }

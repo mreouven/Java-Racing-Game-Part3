@@ -1,5 +1,6 @@
 package graphics;
 
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +28,7 @@ public class CtrlPanel extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		JButton btnNewButton_1 = new JButton("Start Race");
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton_1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				api.Start();
@@ -38,6 +40,7 @@ public class CtrlPanel extends JPanel {
 		JButton btnNewButton_2 = new JButton("Show info");
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnNewButton_2.setBounds(51, 556, 150, 33);
+		btnNewButton_2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		add(btnNewButton_2);
 
 	}

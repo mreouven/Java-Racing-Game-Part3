@@ -1,6 +1,5 @@
 package game.racers.naval;
 
-import java.awt.Graphics;
 
 import game.racers.Racer;
 import utilities.EnumContainer;
@@ -43,12 +42,7 @@ public class RowBoat extends Racer implements INavalRacer {
 		return s;
 	}
 
-	@Override
-	public void drawObject(Graphics g) {
-		// TODO Auto-generated method stub
-		
-		
-	}
+
 
 
 

@@ -1,8 +1,10 @@
 package utilities;
 
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 import factory.RaceBuilder;
 import game.arenas.*;
@@ -37,10 +39,13 @@ public class API {
 		try {
 			myArena = builder.buildArena("game.arenas."+nm, length, maxRacers);
 			System.out.println(nm+" has been built ");
+			setRacerChoose();
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
 				| IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
 		
 			System.out.println("Unable to build arena!");
+			//TODO arenaFrame.setSize(new Dimension((int)length, 700));
+			
 		}
 		
 	}
@@ -58,7 +63,7 @@ public class API {
 	
 	public void Start() {
 		
-		myArena.initRace();
+		//myArena.initRace();
 		myArena.startRace();
 		resetGUI();
 		
@@ -75,6 +80,7 @@ public class API {
 
 
 	public void addRacer(String type,String name, double maxSpeed, double acceleration, utilities.EnumContainer.Color color) {
+		
 		if(racers==null) {
 			racers=new ArrayList<>();
 		}
@@ -85,7 +91,7 @@ public class API {
 				if(type.compareTo("Car")==0 || type.compareTo("Bicycle")==0)
 				myArena.addRacer(builder.buildWheeledRacer("game.racers.land."+type, name, maxSpeed, acceleration, color, 4));
 				else {
-					racers.add(builder.buildRacer("game.racers.land."+type, name, maxSpeed, acceleration, color));
+					myArena.addRacer(builder.buildRacer("game.racers.land."+type, name, maxSpeed, acceleration, color));
 				}
 			} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
 					| IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
@@ -112,7 +118,10 @@ public class API {
 		default:
 			break;
 		}
+	
 		}	catch (RacerLimitException e) {
+			//TODO JETER  JOptionPane.showMessageDialog(this, "Invalid Content please enter Information","EROOR",JOptionPane.ERROR_MESSAGE)
+			//TODO VOIR SI ON PEUX DESACTIVER LE LISTERNER
 			System.out.println("[Error] " + e.getMessage());
 		} catch (RacerTypeException e) {
 			System.out.println("[Error] " + e.getMessage());
@@ -123,6 +132,7 @@ public class API {
 	
 	
 	public void setRacerChoose() {
+
 		comboBox_1.removeAllItems();
 		switch (this.arena) {
 		case LAND:

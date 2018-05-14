@@ -59,6 +59,9 @@ public abstract class Arena implements Observer{
 		}
 		
 	}
+	public double getLength() {
+		return length;
+	}
 	public void startRace() {
 		ExecutorService pool=Executors.newFixedThreadPool(activeRacers.size());
 		

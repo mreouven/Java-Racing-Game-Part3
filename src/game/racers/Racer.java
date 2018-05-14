@@ -11,7 +11,9 @@ import java.util.Observer;
 import javax.imageio.ImageIO;
 import game.arenas.Arena;
 import graphics.ArenaField;
+import graphics.ArenaFrame;
 import graphics.IDrawable;
+import utilities.API;
 import utilities.EnumContainer;
 import utilities.EnumContainer.Event;
 import utilities.Fate;
@@ -98,7 +100,7 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 	}
 
 	public Point move() {
-		
+		//VERIFIER PK PAS DE MISHUP??
 		this.setChanged();
 		if(mishap!=null && mishap.isFixable() && mishap.getTurnsToFix()==0) {
 			mishap=null;
@@ -173,7 +175,7 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 	public void run() {
 		System.out.println("runing");
 		while(move().getX()<=finish.getX() && !isDisabled() ) {
-			System.out.println(currentLocation.getX());
+			
 		};
 		
 	}
@@ -239,9 +241,12 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 
 	
 	public void drawObject(Graphics g,ArenaField panel)
-	    {	
+	    {	//TODO PAS ENLEVER 150 MAIS POURCENTAGE
 			if(currentLocation!=null) {
-		 		g.drawImage(img1,(int)currentLocation.getX(),(int)currentLocation.getY(),150,150, panel);
+				if(((int)currentLocation.getX()*(int)API.getInstance().arenaFrame.panel.field.getWidth())/(int)API.getInstance().getArena().getLength()<(int)API.getInstance().arenaFrame.panel.field.getWidth()-150)
+		 			g.drawImage(img1,(((int)currentLocation.getX()*(int)API.getInstance().arenaFrame.panel.field.getWidth())/(int)API.getInstance().getArena().getLength()),(int)currentLocation.getY(),150,150, panel);
+				else
+					g.drawImage(img1,(int)API.getInstance().arenaFrame.panel.field.getWidth()-150,(int)currentLocation.getY(),150,150, panel);
 		 		panel.repaint();
 			}
 	 		
