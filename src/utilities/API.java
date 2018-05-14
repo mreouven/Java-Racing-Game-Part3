@@ -4,8 +4,6 @@ package utilities;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-
 import factory.RaceBuilder;
 import game.arenas.*;
 import game.arenas.exceptions.*;
