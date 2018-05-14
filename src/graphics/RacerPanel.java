@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import game.arenas.exceptions.RacerLimitException;
 import utilities.API;
 import utilities.EnumContainer;
 
@@ -32,6 +33,7 @@ public class RacerPanel extends JPanel implements ActionListener {
 	private JTextField nameRacer;
 	private JTextField speedMax;
 	private JTextField acceleration_field;
+	private JButton btnNewButton;
 	JComboBox<String> comboBox_1;
 	JComboBox<EnumContainer.Color> comboBox_2;
 	private static final long serialVersionUID = 1L;
@@ -109,7 +111,7 @@ public class RacerPanel extends JPanel implements ActionListener {
 		acceleration_field.setColumns(10);
 		
 		add(Box.createGlue()); 
-		JButton btnNewButton = new JButton("Add racer");
+		btnNewButton = new JButton("Add racer");
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		//btnNewButton.setBounds(51, 160, 150, 33);
 		btnNewButton.addActionListener(this);
@@ -130,7 +132,13 @@ public class RacerPanel extends JPanel implements ActionListener {
 		if (!nameRacer.getText().equals("")){nameRacer.setBackground(Color.WHITE);name=nameRacer.getText();}else {nameRacer.setBackground(Color.RED);JOptionPane.showMessageDialog(this, "Invalid Content please enter Information","EROOR",JOptionPane.ERROR_MESSAGE);return;}
 		if (!acceleration_field.getText().equals("")){acceleration_field.setBackground(Color.WHITE);try {accel=Double.parseDouble(acceleration_field.getText());}catch (NumberFormatException e1){JOptionPane.showMessageDialog(this, "Enter numerical value","EROOR",JOptionPane.INFORMATION_MESSAGE);acceleration_field.setBackground(Color.ORANGE);	}}else {acceleration_field.setBackground(Color.RED);JOptionPane.showMessageDialog(this, "Invalid Content please enter Information","EROOR",JOptionPane.ERROR_MESSAGE);return;}
 		if (!speedMax.getText().equals("")){speedMax.setBackground(Color.WHITE);try {this.max_speed=Double.parseDouble(speedMax.getText());}catch (NumberFormatException e1){JOptionPane.showMessageDialog(this, "Enter numerical value","EROOR",JOptionPane.INFORMATION_MESSAGE);speedMax.setBackground(Color.ORANGE);}}else {speedMax.setBackground(Color.RED);JOptionPane.showMessageDialog(this, "Invalid Content please enter Information","EROOR",JOptionPane.ERROR_MESSAGE);return;}
-		api.addRacer((String) comboBox_1.getSelectedItem(), name, max_speed, accel,(EnumContainer.Color)comboBox_2.getSelectedItem());
+		try {
+			api.addRacer((String) comboBox_1.getSelectedItem(), name, max_speed, accel,(EnumContainer.Color)comboBox_2.getSelectedItem());
+		} catch (RacerLimitException e1) {
+			JOptionPane.showMessageDialog(this, "RACER LIMIT ARENA","EROOR",JOptionPane.ERROR_MESSAGE);
+			System.out.println("[Error] " + e1.getMessage());
+			btnNewButton.removeActionListener(this);
+		}
 		
 	}
 	

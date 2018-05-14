@@ -1,27 +1,30 @@
 package graphics;
 
+
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+
 import game.racers.air.IAerialRacer;
 import utilities.API;
 import utilities.EnumContainer;
 
-public class ArenaField extends JPanel implements ActionListener {
+public class ArenaField extends JPanel  {
 
 	private static API api = API.getInstance();
 	/**
 	 * Create the panel.
 	 */
 	public ArenaField(){
-		setPreferredSize(new Dimension(5050, 500));
-
+		//setLayout(new BorderLayout());
+		//JScrollPane scroll = new JScrollPane(this);
+		//add(scroll);
+		setPreferredSize(new Dimension(5050, 1500));
+	
 		setBackgr(EnumContainer.Arena.NULL);
 
 		
@@ -42,7 +45,7 @@ public class ArenaField extends JPanel implements ActionListener {
 	
 
 	
-	public void paintComponent(Graphics g){
+	public synchronized void paintComponent(Graphics g){
 		
 		   	super.paintComponent(g);
 		   	if(bgr && (backroun!=null))
@@ -90,11 +93,6 @@ public class ArenaField extends JPanel implements ActionListener {
 	
 
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		
-	}
 	
 	
 

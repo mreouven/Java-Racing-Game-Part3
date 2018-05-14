@@ -4,7 +4,7 @@ public class Point {
 
 	public static final int MAX_X = 1000000;
 	public static final int MIN_X = 0;
-	public static final int MAX_Y = 800;
+	public static final int MAX_Y = 800000;
 	public static final int MIN_Y = 0;
 
 	private double x;

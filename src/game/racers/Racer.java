@@ -6,12 +6,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
-import java.util.Observer;
 
 import javax.imageio.ImageIO;
-import game.arenas.Arena;
 import graphics.ArenaField;
-import graphics.ArenaFrame;
 import graphics.IDrawable;
 import utilities.API;
 import utilities.EnumContainer;
@@ -22,7 +19,7 @@ import utilities.Point;
 
 public abstract class Racer extends Observable implements IDrawable,Runnable {
 	
-	private Observer arena;
+	
 	protected static int lastSerialNumber = 1;
 	private int serialNumber;
 	private String name;
@@ -40,7 +37,12 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 	private Mishap mishap;
 	private static double counter=0;
 	private static void counter() {
-		counter+=250;
+		counter+=200;
+		
+	}
+	public static void resetCounter() {
+		counter=0;
+		
 	}
 	
 	
@@ -160,11 +162,11 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 		return this.mishap != null;
 	}
 
-	public void initRace(Arena arena, Point start, Point finish) {
-		this.arena = arena;
+	public void initRace( Point start, Point finish) {
 		this.currentLocation = new Point(start.getX(),counter);
 		counter();
 		this.finish = new Point(finish);
+		
 	}
 
 	public void introduce() {
@@ -248,6 +250,7 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 				else
 					g.drawImage(img1,(int)API.getInstance().arenaFrame.panel.field.getWidth()-150,(int)currentLocation.getY(),150,150, panel);
 		 		panel.repaint();
+		 	
 			}
 	 		
 	    }

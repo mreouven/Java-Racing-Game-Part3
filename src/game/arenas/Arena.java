@@ -2,7 +2,6 @@ package game.arenas;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.ExecutorService;
@@ -46,6 +45,7 @@ public abstract class Arena implements Observer{
 		this.compleatedRacers = new ArrayList<Racer>();
 		this.brokenRacers = new ArrayList<Racer>();
 		this.disabledRacers = new ArrayList<Racer>();
+		
 	}
 	public void drawObject(Graphics g,ArenaField panel) {
 		for (Racer racer : activeRacers) {
@@ -76,7 +76,7 @@ public abstract class Arena implements Observer{
 			throw new RacerLimitException(this.MAX_RACERS, newRacer.getSerialNumber());
 		}
 		newRacer.addObserver(this);
-		newRacer.initRace(this, new Point(0, 0), new Point(this.length, 0));
+		newRacer.initRace(new Point(0, 0), new Point(this.length, 0));
 		this.activeRacers.add(newRacer);
 		
 	}
@@ -102,7 +102,7 @@ public abstract class Arena implements Observer{
 		for (Racer racer : this.activeRacers) {
 			Point s = new Point(0, y);
 			Point f = new Point(this.length, y);
-			racer.initRace(this, s, f);
+			racer.initRace( s, f);
 			y += Arena.MIN_Y_GAP;
 		}
 	}

@@ -1,4 +1,4 @@
-package utilities;
+/*package utilities;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -20,10 +20,10 @@ import game.racers.naval.RowBoat;
 import game.racers.naval.SpeedBoat;
 import utilities.EnumContainer.Color;
 
-/**
+*//**
  * @author Bar Ohayon
  *
- */
+ *//*
 public class Program {
 
 	private static Arena arena1;
@@ -112,9 +112,9 @@ public class Program {
 		addRacersToArena();
 	}
 
-	/**
+	*//**
 	 * @param args
-	 */
+	 *//*
 	public static void main(String[] args) {
 		Fate.setSeed(477734503); // to get same "random" results every run;
 		////////////////////////////////////////////
@@ -153,7 +153,7 @@ public class Program {
 	}
 
 }
-/*
+
 // output
 
 Testing default valus and introduction.

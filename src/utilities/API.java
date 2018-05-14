@@ -1,6 +1,7 @@
 package utilities;
 
 
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
@@ -15,7 +16,6 @@ public class API {
 	private Arena myArena;
 	public ArenaFrame arenaFrame;
 	private static ArrayList<Racer> racers;
-	
 	private static RaceBuilder builder = RaceBuilder.getInstance();
 	private static API instance;
 	private JComboBox<String> comboBox_1;
@@ -38,6 +38,7 @@ public class API {
 			myArena = builder.buildArena("game.arenas."+nm, length, maxRacers);
 			System.out.println(nm+" has been built ");
 			setRacerChoose();
+			Racer.resetCounter();
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
 				| IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
 		
@@ -77,7 +78,7 @@ public class API {
 	}
 
 
-	public void addRacer(String type,String name, double maxSpeed, double acceleration, utilities.EnumContainer.Color color) {
+	public void addRacer(String type,String name, double maxSpeed, double acceleration, utilities.EnumContainer.Color color) throws RacerLimitException {
 		
 		if(racers==null) {
 			racers=new ArrayList<>();
@@ -118,13 +119,14 @@ public class API {
 		}
 	
 		}	catch (RacerLimitException e) {
-			//TODO JETER  JOptionPane.showMessageDialog(this, "Invalid Content please enter Information","EROOR",JOptionPane.ERROR_MESSAGE)
-			//TODO VOIR SI ON PEUX DESACTIVER LE LISTERNER
-			System.out.println("[Error] " + e.getMessage());
+			throw e;
+			
 		} catch (RacerTypeException e) {
 			System.out.println("[Error] " + e.getMessage());
 		}
 		System.out.println("racer added");
+		
+	
 		resetGUI();
 	}
 	
