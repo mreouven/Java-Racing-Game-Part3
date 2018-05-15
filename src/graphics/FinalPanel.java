@@ -18,6 +18,7 @@ public class FinalPanel extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 1L;
 
 	public FinalPanel() {
+		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		field = new ArenaField();
 		add(field,BorderLayout.EAST);

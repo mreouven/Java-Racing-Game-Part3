@@ -47,7 +47,7 @@ public abstract class Arena implements Observer{
 		this.disabledRacers = new ArrayList<Racer>();
 		
 	}
-	public void drawObject(Graphics g,ArenaField panel) {
+	public synchronized void drawObject(Graphics g,ArenaField panel) {
 		for (Racer racer : activeRacers) {
 			racer.drawObject(g, panel);
 		}
@@ -58,6 +58,9 @@ public abstract class Arena implements Observer{
 			racer.drawObject(g, panel);
 		}
 		
+	}
+	public void setCompleatedRacers(ArrayList<Racer> compleatedRacers) {
+		this.compleatedRacers = compleatedRacers;
 	}
 	public double getLength() {
 		return length;
@@ -76,13 +79,9 @@ public abstract class Arena implements Observer{
 			throw new RacerLimitException(this.MAX_RACERS, newRacer.getSerialNumber());
 		}
 		newRacer.addObserver(this);
-		newRacer.initRace(new Point(0, 0), new Point(this.length, 0));
+		newRacer.initRace(FRICTION,new Point(0, 0), new Point(this.length, 0));
 		this.activeRacers.add(newRacer);
 		
-	}
-
-	public void crossFinishLine(Racer racer) {
-		this.compleatedRacers.add(racer);
 	}
 
 	public ArrayList<Racer> getActiveRacers() {
@@ -93,28 +92,19 @@ public abstract class Arena implements Observer{
 		return compleatedRacers;
 	}
 
-	public boolean hasActiveRacers() {
-		return this.activeRacers.size() > 0;
-	}
+
 
 	public void initRace() {
 		int y = 0;
 		for (Racer racer : this.activeRacers) {
 			Point s = new Point(0, y);
 			Point f = new Point(this.length, y);
-			racer.initRace( s, f);
+			racer.initRace(FRICTION, s, f);
 			y += Arena.MIN_Y_GAP;
 		}
 	}
 
-	public void playTurn() {
-		for (Racer racer : this.activeRacers) {
-			racer.move();
-		}
-
-		for (Racer r : this.compleatedRacers)
-			this.activeRacers.remove(r);
-	}
+	
 
 	public void showResults() {
 		for (Racer r : this.compleatedRacers) {
@@ -154,8 +144,7 @@ public abstract class Arena implements Observer{
 			System.out.println("DISABLED ");
 			((Racer)o).introduce();
 			this.activeRacers.remove((Racer)o);
-			this.disabledRacers.add((Racer)o);	
-		
+			this.disabledRacers.add((Racer)o);
 			break;
 		default:			
 			break;

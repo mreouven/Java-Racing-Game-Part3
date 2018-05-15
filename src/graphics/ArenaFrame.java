@@ -24,7 +24,7 @@ public class ArenaFrame extends JFrame implements ActionListener {
 		 
 		 arenaFrame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		 //arenaFrame.setSize(new Dimension(1000, 700));
-		 //arenaFrame.setResizable(false);
+		 arenaFrame.setResizable(false);
 		 arenaFrame.setLocationRelativeTo(null);
 		 arenaFrame.setVisible(true);
 		
@@ -33,8 +33,13 @@ public class ArenaFrame extends JFrame implements ActionListener {
 	public ArenaFrame() {
 		super("Arena");
 		api.setArenaFrame(this);
-		setSize(new Dimension(1000, 1800));
+		setSize(new Dimension(2500, 1600));
 		panel = new FinalPanel();
+		
+		
+		
+		
+		
 		add(panel);
 	    panel.setVisible(true);
 	    

@@ -20,13 +20,10 @@ public class ArenaField extends JPanel  {
 	 * Create the panel.
 	 */
 	public ArenaField(){
-		//setLayout(new BorderLayout());
-		//JScrollPane scroll = new JScrollPane(this);
-		//add(scroll);
+		
 		setPreferredSize(new Dimension(5050, 1500));
-	
 		setBackgr(EnumContainer.Arena.NULL);
-
+		
 		
 	}
 

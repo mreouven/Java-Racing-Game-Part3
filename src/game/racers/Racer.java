@@ -27,6 +27,7 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 	private Point finish;
 	private double maxSpeed;
 	protected boolean coordChanged;
+	private double FRICTION;
 	protected Thread thread;
 	private double acceleration;
 	private double currentSpeed;
@@ -103,8 +104,13 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 
 	public Point move() {
 		//VERIFIER PK PAS DE MISHUP??
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		this.setChanged();
-		if(mishap!=null && mishap.isFixable() && mishap.getTurnsToFix()==0) {
+		if(mishap!=null && mishap.isFixable() && hasMishap()) {
 			mishap=null;
 			this.notifyObservers(Event.REPAIRED);
 		}
@@ -117,17 +123,15 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 				
 			}
 			else
-				{this.notifyObservers(Event.DISABLED);
+				{
+				this.notifyObservers(Event.DISABLED);
 				Thread.currentThread().interrupt();
+				return new Point(finish);
 				}
 			
 		}
 		
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		
 		if(mishap!=null && mishap.getTurnsToFix()>0) {
 			this.setCurrentSpeed(this.currentSpeed + mishap.getReductionFactor() * this.acceleration);
 			if(this.mishap.isFixable())
@@ -141,7 +145,7 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 		if (this.currentSpeed > this.maxSpeed) 
 			this.setCurrentSpeed(this.maxSpeed);
 		
-		Point newLocation = new Point((this.currentLocation.getX() + (1 * this.currentSpeed)),
+		Point newLocation = new Point((this.currentLocation.getX() + (FRICTION * this.currentSpeed)),
 				this.currentLocation.getY());
 		this.setCurrentLocation(newLocation);
 		
@@ -162,11 +166,11 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 		return this.mishap != null;
 	}
 
-	public void initRace( Point start, Point finish) {
+	public void initRace(Double friction, Point start, Point finish) {
 		this.currentLocation = new Point(start.getX(),counter);
 		counter();
 		this.finish = new Point(finish);
-		
+		FRICTION=friction;
 	}
 
 	public void introduce() {
@@ -183,7 +187,9 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 	}
 	
 	private boolean isDisabled() {return (mishap!=null && !mishap.isFixable()); }
-	
+	public boolean isfinish() {
+		return currentLocation.getX()>finish.getX();
+	}
 	
 	
 	public EnumContainer.Color getColor() {

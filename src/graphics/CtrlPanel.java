@@ -42,6 +42,11 @@ public class CtrlPanel extends JPanel {
 		btnNewButton_2.setBounds(51, 556, 150, 33);
 		btnNewButton_2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		add(btnNewButton_2);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new JTableBasiqueAvecModeleDynamiqueObjet().setVisible(true);
+			}
+		});
 
 	}
 
