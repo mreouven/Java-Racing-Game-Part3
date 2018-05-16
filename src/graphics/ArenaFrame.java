@@ -1,6 +1,7 @@
 package graphics;
 
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import utilities.API;
@@ -24,6 +25,8 @@ public class ArenaFrame extends JFrame implements ActionListener {
 		 
 		 arenaFrame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		 //arenaFrame.setSize(new Dimension(1000, 700));
+		 ImageIcon img = new ImageIcon(IDrawable.PICTURE_PATH+"flag.png");
+		 arenaFrame.setIconImage(img.getImage());
 		 arenaFrame.setResizable(false);
 		 arenaFrame.setLocationRelativeTo(null);
 		 arenaFrame.setVisible(true);
