@@ -37,6 +37,10 @@ public class ModeleDynamiqueObjet extends AbstractTableModel {
 			amis.add(new Ami(racer));
 			fireTableRowsInserted(amis.size() -1, amis.size() -1);
 			}
+    	for (Racer racer : API.getInstance().getArena().getDisabledRacers()) {
+			amis.add(new Ami(racer));
+			fireTableRowsInserted(amis.size() -1, amis.size() -1);
+			}
     }
  
 	public int getRowCount() {

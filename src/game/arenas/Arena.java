@@ -57,7 +57,13 @@ public abstract class Arena implements Observer{
 		for (Racer racer : compleatedRacers) {
 			racer.drawObject(g, panel);
 		}
+		for (Racer racer : disabledRacers) {
+			racer.drawObject(g, panel);
+		}
 		
+	}
+	public ArrayList<Racer> getDisabledRacers() {
+		return disabledRacers;
 	}
 	public void setCompleatedRacers(ArrayList<Racer> compleatedRacers) {
 		this.compleatedRacers = compleatedRacers;
