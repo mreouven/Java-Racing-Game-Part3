@@ -28,7 +28,7 @@ public class EnumContainer {
 	}
 
 	public static enum Color {
-		RED, GREEN, BLUE, BLACK, YELLOW , DEAD
+		RED, GREEN, BLUE, BLACK, YELLOW
 	}
 
 	public static enum Coverage {

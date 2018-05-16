@@ -12,7 +12,6 @@ import graphics.ArenaField;
 import graphics.IDrawable;
 import utilities.API;
 import utilities.EnumContainer;
-import utilities.EnumContainer.Color;
 import utilities.EnumContainer.Event;
 import utilities.Fate;
 import utilities.Mishap;
@@ -33,7 +32,7 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 	private double acceleration;
 	private double currentSpeed;
 	protected boolean threadSuspended;
-	private double failureProbability=0.05; 
+	private double failureProbability=0; 
 	private EnumContainer.Color color; 
 	protected BufferedImage img1;
 	private Mishap mishap;
@@ -163,9 +162,7 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 
 	private boolean hasMishap() {
 		if (this.mishap != null && this.mishap.getTurnsToFix() == 0)
-			{this.mishap = null;
-			this.notifyObservers(Event.REPAIRED);
-			}
+			this.mishap = null;
 		return this.mishap != null;
 	}
 
@@ -182,56 +179,16 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 
 	@Override
 	public void run() {
-		
-		while(true) {
-		double reductionFactor = 1,friction=FRICTION;
-		//If there is no mishap ,generating one
-		if (!(this.hasMishap()) && Fate.breakDown(this.failureProbability)) 
-			this.mishap = Fate.generateMishap();
-		
-        
-		if (this.hasMishap()) {
-			reductionFactor = mishap.getReductionFactor();
-			this.mishap.nextTurn();
+		System.out.println("runing");
+		while(move().getX()<=finish.getX() && !isDisabled() ) {
 			
-			if(this.mishap.isFixable()) {
-				this.setChanged();
-			    this.notifyObservers(Event.BROKENDOWN);
-				   
-			}
-			else {
-				this.setChanged();
-			    this.notifyObservers(Event.DISABLED);
-			    this.color=Color.DEAD;
-			    loadImages("dead");
-			    break;
-		}
-		}
-
-		this.currentSpeed =this.currentSpeed < this.maxSpeed?this.currentSpeed += this.acceleration * friction * reductionFactor:this.maxSpeed* friction * reductionFactor;
-
-		
-		double newX = (this.currentLocation.getX() + (this.currentSpeed))>=this.finish.getX()?this.finish.getX():(this.currentLocation.getX() + (this.currentSpeed));
-		this.currentLocation.setX(newX);
-		if (this.currentLocation.getX() >= this.finish.getX()) {
-            this.setChanged();
-            this.notifyObservers(Event.FINISHED);
-    		this.currentLocation=new Point(finish.getX(),currentLocation.getY());
-            break;
-		}
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {}
-		
-		}
+		};
 		
 	}
 	
-	@SuppressWarnings("unused")
 	private boolean isDisabled() {return (mishap!=null && !mishap.isFixable()); }
-	
 	public boolean isfinish() {
-		return currentLocation.getX()>=finish.getX();
+		return currentLocation.getX()>finish.getX();
 	}
 	
 	
@@ -279,14 +236,6 @@ public abstract class Racer extends Observable implements IDrawable,Runnable {
 			 case YELLOW:
 				 try { 
 					 img1 = ImageIO.read(new File(PICTURE_PATH + nm + "Yellow.png"));
-				 } 
-				 catch (IOException e) { 
-					 System.out.println("Cannot load picture");
-					 }
-				 break;
-			 case DEAD:
-				 try { 
-					 img1 = ImageIO.read(new File(PICTURE_PATH + "DEAD.png"));
 				 } 
 				 catch (IOException e) { 
 					 System.out.println("Cannot load picture");
